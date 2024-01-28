@@ -26,13 +26,17 @@ export class UserController {
     //     return response.status(200).json(users)
     // }
     
-    getUser = (request: Request, response: Response) => {
-        const { name } = request.params
-        const user = this.userService.getUser(name)
+    getUser = async (request: Request, response: Response) => {
+        const { userId } = request.params
+        const user = await this.userService.getUser(userId)
         // if(!user){
         //     return response.status(404).json({ message: 'Usuário não encontrado'})
         // }
-        return response.status(200).json( user )
+        return response.status(200).json( {
+            userId: user?.user_id,
+            name: user?.name,
+            email: user?.email
+        } )
     }
 
 //     deleteUser = (request: Request, response: Response) => {
